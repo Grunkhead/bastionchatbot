@@ -1,0 +1,86 @@
+<html>
+  <head>
+
+    <title>Chatbot test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name=”robots” content=”nofollow” />
+
+    <style>
+      body {
+        font-family: monaco, Consolas, Lucida Console, monospace; 
+      }
+
+      h1, h2, h3, h4, h5 {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+    </style>
+    
+    <style>
+      df-messenger {
+        --df-messenger-bot-message: #283B66;
+        --df-messenger-button-titlebar-color: #283B66;
+        --df-messenger-chat-background-color: #fafafa;
+        --df-messenger-font-color: white;
+        --df-messenger-send-icon: #FBBE11;
+        --df-messenger-user-message: #FBBE11;
+      }
+    </style>
+
+  </head>
+  <body>
+
+    <div style="margin-top: 30px; display: flex; justify-content: center;">
+      <div style="text-align: center;">
+        <h1>Uitleg</h1>
+        <p>..</p>
+      </div>
+    </div>
+
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+
+    <df-messenger
+      intent="WELCOME"
+      chat-title="Chatbot Bas"
+      chat-icon="https://i.ibb.co/Wk6NPrf/Frame-20.png"
+      agent-id="4617db8b-0ca9-4185-bcdc-7f61156bf6e3"
+      language-code="en">
+    </df-messenger>
+
+    <script>
+
+      (function() {
+        window.addEventListener('dfMessengerLoaded', function (event) {
+
+          let DFM = document.querySelector('df-messenger');
+          let chat = DFM.shadowRoot.querySelector('df-messenger-chat');
+          let titleBar = chat.shadowRoot.querySelector('df-messenger-titlebar');
+          let userInput = chat.shadowRoot.querySelector("df-messenger-user-input");
+          let messageList = chat.shadowRoot.querySelector("df-message-list");
+
+          const addCssToShadowRootElement = (css, element) => {
+            let sheet = new CSSStyleSheet;
+            sheet.replaceSync(css);
+            element.shadowRoot.adoptedStyleSheets = [sheet];
+          }
+
+          const addHtmlBeforeElement = (html, element) => { element.outerHTML = html + element.outerHTML; }
+          const addHtmlAfterElement = (html, element) => { element.outerHTML = element.outerHTML + html; }
+
+          addCssToShadowRootElement('div.chat-wrapper[opened="true"] { border-radius: 10px;  }', chat) // Make the chat window more rounded borders
+          addCssToShadowRootElement('.title-wrapper { height: 50px !important; padding-bottom: 10px !important; }', titleBar) // Gives the title bar more height
+
+          addCssToShadowRootElement('df-message-list { background-repeat: no-repeat; background-size: 100%; background-image: url("https://cleanshot-cloud-fra.s3.eu-central-1.amazonaws.com/media/35264/fsGmKQPwesCPPxbOvLxjm9m475owLKbdAjtiJrgX.jpeg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEOH%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGV1LWNlbnRyYWwtMSJGMEQCIEG4fhbg3mNnIFhFERZ1yNMzdoxfa%2BRc6M9aOGGjxZ7XAiAVuypOWpXOpceRFRxlsL7dOFbkIzZSwmuDc12TbZB3YSqqAgiK%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDkxOTUxNDQ5MTY3NCIMmhH6fWgBpYqNAhrfKv4BBVxf5RM7MIddFmQsyZFlKU34qTDXI7dRPRXLHaWRC%2BeWQmFHhmwrzkkbxeUV1JIUPQSC2oBuGWe74vVwSD%2BJI5FfONoYfEGLaNSDrmBrsIJnd7YknltBKVteb%2FwubBpBNaueRejANwMCVaXEwRR4i8Cyye97UOoxmoS32oHsypi7axgwfxu2RbyNHweTl8LGLT%2BMZEh0TTmGC2yMGfYPzYIHbwOPoGMRoylP0o1Tf44ZCMP47fvJpF9Nq6wGQyS%2F4qiFzFcHMcxwl9jwq37GWcH1PA1bdz39IGzYwjCs7iGa0OPBoTQ3bOweUKABHkx%2Fes5W3am3D0aUjrYY2IowmevkkgY6mwEU6sWIBNX8j6h9u1Kykvz%2BWJnjfSf1jL%2FvCr%2FbppCJtpIgcxDmXOY9pr8%2FhTq2LrKRcUjaqdS0KfflQJphJ7%2FwYDZdWCMx2Ms5O6WFKrviX9yqI2Hs1FpX1UVaPf55rUULBdQA6byFjJkBZpulEo0gfFLqpxx4jYqtpKviYPc3S9iH8enaYiYDB9im5UaPnqA6AVbIIdfbxti0Iw%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIA5MF2VVMNHQK56ZWN%2F20220415%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20220415T091102Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Signature=0ed7c6e8b57c1235182a58e21c4fb5584b731a397ac5f6a4cd60ec79cb82a741"); }', chat)
+
+          addHtmlAfterElement( // Add subtitle under open window title
+            '<div style="position: absolute; top: 36px; font-size: 11px;">Always ready to answer any questions</div>',
+            titleBar.shadowRoot.querySelector("#dfTitlebar"))
+
+          // addCssToShadowRootElement('#messageList .message { border-radius: 5 !important; }', messageList)
+          // addCssToShadowRootElement('#messageList .message { border-radius: 5 !important; }', messageList)
+
+        });
+      })();
+    </script>
+
+  </body>
+</html>
